@@ -1,11 +1,11 @@
 My app hosts sports contests. On the main window I want to see a vertical list of all the contests. I want to be able to add a new contest by clicking a plus sign on the bottom of the screen, update the details of an existing one by clicking a pen icon or delete one from the list by clicking a trash can icon.
 
 A contest should have the following information: 
-Name - Contest Name
-Category - Number between 1 and 4 including
-Location - Location of the contest
-Date - Date of contest
-Player Limit - The limit of players who can compete
+Name - Contest Name.
+Category - Number between 1 and 4 including.
+Location - Location of the contest.
+Date - Date of contest.
+Player Limit - The limit of players who can compete.
 
 Create Contest: Add Contest clicked, new window opens up where you input valid information for all the five fields and add it to the list.
 Read Contest: All the details will be visible on the main window. When showing its players, only show the contest's name.
