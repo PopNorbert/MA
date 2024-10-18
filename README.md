@@ -12,7 +12,7 @@ Read Contest: All the details will be visible on the main window. When showing i
 Update Contest: Click the specific contest's update button, new window opens up where you input valid information for the fields you want to update.
 Delete Contest: Click the specific contest's delete button, it is removed from the list.
 
-Every crud operation will be persisted in the database. There will be a strong connection between the frontend and backend.
+Every crud operation will be persisted in the database.
 
 If the device goes offline:
 The local list of items will still be shown. The user will be notified that there is no connection. Creating an item will be done locally until the connection comes back online, at which point the data will be sent to the server. Update and delete will not work while offline.
