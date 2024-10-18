@@ -16,3 +16,6 @@ Every crud operation will be persisted in the database.
 
 If the device goes offline:
 The local list of items will still be shown. The user will be notified that there is no connection. Creating an item will be done locally until the connection comes back online, at which point the data will be sent to the server. Update and delete will not work while offline.
+
+![](./add.png)
+![](./main.png)
