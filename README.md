@@ -1,4 +1,4 @@
-I want an app where I can host my sports contests. On the main window I want to see a vertical list of all the contests. I want to be able to add a new contest by clicking a plus sign on the bottom of the screen, update the details of an existing one by clicking a pen icon or delete one from the list by clicking a trash can icon.
+My app hosts sports contests. On the main window I want to see a vertical list of all the contests. I want to be able to add a new contest by clicking a plus sign on the bottom of the screen, update the details of an existing one by clicking a pen icon or delete one from the list by clicking a trash can icon.
 
 A contest should have the following information: 
 Name - Contest Name
