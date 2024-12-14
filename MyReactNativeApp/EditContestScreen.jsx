@@ -1,31 +1,24 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Button, Text } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useContest } from './ContestContext';
 
-const CreateContestScreen = () => {
+const EditContestScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const { setContests } = route.params;
+  const { contest } = route.params;
+  const { updateContest } = useContest();
 
-  const [contestDetails, setContestDetails] = useState({
-    name: '',
-    category: '',
-    location: '',
-    date: '',
-    maxplayers: '',
-  });
+  const [contestDetails, setContestDetails] = useState({ ...contest });
 
-  const handleCreate = () => {
-    setContests((prevContests) => [
-      ...prevContests,
-      { id: Date.now(), ...contestDetails },
-    ]);
+  const handleEdit = () => {
+    updateContest(contestDetails);
     navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Create Contest</Text>
+      <Text style={styles.title}>Edit Contest</Text>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -53,11 +46,11 @@ const CreateContestScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Max Players"
-        value={contestDetails.maxplayers}
+        value={contestDetails.maxplayers.toString()}
         onChangeText={(text) => setContestDetails((prev) => ({ ...prev, maxplayers: text }))}
         keyboardType="numeric"
       />
-      <Button title="Create" onPress={handleCreate} />
+      <Button title="Save Changes" onPress={handleEdit} />
     </View>
   );
 };
@@ -80,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateContestScreen;
+export default EditContestScreen;
