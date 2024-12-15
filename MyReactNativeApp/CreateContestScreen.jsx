@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { TextInput, Button, View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TextInput, Button, View, StyleSheet, Alert } from 'react-native';
 import { useContest } from './ContestContext';
 
 const CreateContest = ({ navigation }) => {
-  const { addContest } = useContest();
+  const { addContest, error } = useContest();
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [location, setLocation] = useState('');
@@ -11,17 +11,27 @@ const CreateContest = ({ navigation }) => {
   const [maxplayers, setMaxplayers] = useState('');
 
   const handleCreate = () => {
-    const newContest = {
-      id: Date.now(),
-      name,
-      category,
-      location,
-      date,
-      maxplayers: parseInt(maxplayers, 10),
-    };
-    addContest(newContest);
-    navigation.goBack();
+    try {
+      const newContest = {
+        id: Date.now(),
+        name,
+        category,
+        location,
+        date,
+        maxplayers: parseInt(maxplayers, 10),
+      };
+      addContest(newContest);
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to create contest');  // Show error alert
+    }
   };
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Error', error);  // Show error alert
+    }
+  }, [error]);
 
   return (
     <View style={styles.container}>

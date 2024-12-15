@@ -4,7 +4,7 @@ import Contest from './Contest.jsx';
 import { useContest } from './ContestContext.js';
 
 const HomeScreen = ({ navigation }) => {
-  const { contests, deleteContest } = useContest();
+  const { contests, deleteContest, error } = useContest();
 
   const confirmDelete = (id) => {
     Alert.alert(
@@ -17,6 +17,12 @@ const HomeScreen = ({ navigation }) => {
       { cancelable: true }
     );
   };
+
+  React.useEffect(() => {
+    if (error) {
+      Alert.alert('Error', error);  // Show error if exists
+    }
+  }, [error]);
 
   return (
     <View style={styles.container}>

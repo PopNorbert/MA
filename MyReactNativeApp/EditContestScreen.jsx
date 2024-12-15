@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Button, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TextInput, Button, Text, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useContest } from './ContestContext';
 
@@ -7,14 +7,24 @@ const EditContestScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { contest } = route.params;
-  const { updateContest } = useContest();
+  const { updateContest, error } = useContest();
 
   const [contestDetails, setContestDetails] = useState({ ...contest });
 
   const handleEdit = () => {
-    updateContest(contestDetails);
-    navigation.goBack();
+    try {
+      updateContest(contestDetails);
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to update contest');  // Show error alert
+    }
   };
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Error', error);  // Show error alert
+    }
+  }, [error]);
 
   return (
     <View style={styles.container}>
