@@ -1,62 +1,68 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SQLite from 'expo-sqlite';
 
 const ContestContext = createContext();
 
 export const ContestProvider = ({ children }) => {
   const [contests, setContests] = useState([]);
-  const [error, setError] = useState(null);  // Add state to store errors
+  const [error, setError] = useState(null);  
 
   useEffect(() => {
     const loadContests = async () => {
       try {
-        const storedContests = await AsyncStorage.getItem('contests');
+        const db = await SQLite.openDatabaseAsync('database');
+        await db.execAsync(`CREATE TABLE IF NOT EXISTS contests (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT ,
+          category TEXT ,
+          location TEXT ,
+          date TEXT ,
+          maxplayers INTEGER 
+        );`)
+        const storedContests = await db.getAllAsync('select * from contests');
         if (storedContests) {
-          setContests(JSON.parse(storedContests));  
+          setContests(storedContests);  
         }
       } catch (error) {
-        setError('Failed to load contests from storage');  // Handle error
+        setError(error.message);  
       }
     };
 
     loadContests();
   }, []);
 
-  const saveContestsToStorage = async (newContests) => {
+  const addContest = async (contest) => {
     try {
-      await AsyncStorage.setItem('contests', JSON.stringify(newContests));
-    } catch (error) {
-      setError('Failed to save contests to storage');  // Handle error
-    }
-  };
-
-  const addContest = (contest) => {
-    try {
+      const db = await SQLite.openDatabaseAsync('database');
+      await db.runAsync('insert into contests (name, category, location, date, maxplayers) values (?,?,?,?,?)', contest.name, contest.category, contest.location, contest.date, contest.maxplayers);
       const updatedContests = [...contests, contest];
       setContests(updatedContests);
-      saveContestsToStorage(updatedContests);
     } catch (error) {
-      setError('Failed to add new contest');
+      setError(error.message);
     }
   };
 
-  const updateContest = (updatedContest) => {
+  const updateContest = async (updatedContest) => {
     try {
-      const updatedContests = contests.map((contest) =>
+      const db = await SQLite.openDatabaseAsync('database');
+      await db.runAsync(
+        'UPDATE contests SET name = ?, category = ?, location = ?, date = ?, maxplayers = ? WHERE id = ?',
+        updatedContest.name, updatedContest.category, updatedContest.location, updatedContest.date, updatedContest.maxplayers, updatedContest.id
+    );      const updatedContests = contests.map((contest) =>
         contest.id === updatedContest.id ? { ...contest, ...updatedContest } : contest
       );
       setContests(updatedContests);
-      saveContestsToStorage(updatedContests);
     } catch (error) {
       setError('Failed to update contest');
     }
   };
 
-  const deleteContest = (id) => {
+  const deleteContest = async (id) => {
     try {
+      const db = await SQLite.openDatabaseAsync('database');
+      await db.runAsync('delete from contests where id = ?', id)
       const updatedContests = contests.filter((contest) => contest.id !== id);
       setContests(updatedContests);
-      saveContestsToStorage(updatedContests);
     } catch (error) {
       setError('Failed to delete contest');
     }

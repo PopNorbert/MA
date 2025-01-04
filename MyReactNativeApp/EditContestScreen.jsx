@@ -16,13 +16,13 @@ const EditContestScreen = () => {
       updateContest(contestDetails);
       navigation.goBack();
     } catch (error) {
-      Alert.alert('Error', 'Failed to update contest');  // Show error alert
+      Alert.alert('Error', 'Failed to update contest');  
     }
   };
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Error', error);  // Show error alert
+      Alert.alert('Error', error);  
     }
   }, [error]);
 

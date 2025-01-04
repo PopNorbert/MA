@@ -23,7 +23,9 @@
     "react-native-screens": "^4.3.0",
     "react-native-vector-icons": "^10.2.0",
     "react-router-dom": "^7.0.1",
-    "react-router-native": "^6.28.0"
+    "react-router-native": "^6.28.0",
+    "expo-sqlite": "~15.0.5",
+    "undefined": "expo-sqlite/legacy"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

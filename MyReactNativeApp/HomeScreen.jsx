@@ -20,7 +20,7 @@ const HomeScreen = ({ navigation }) => {
 
   React.useEffect(() => {
     if (error) {
-      Alert.alert('Error', error);  // Show error if exists
+      Alert.alert('Error', error);  
     }
   }, [error]);
 

@@ -23,13 +23,13 @@ const CreateContest = ({ navigation }) => {
       addContest(newContest);
       navigation.goBack();
     } catch (error) {
-      Alert.alert('Error', 'Failed to create contest');  // Show error alert
+      Alert.alert('Error', 'Failed to create contest');  
     }
   };
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Error', error);  // Show error alert
+      Alert.alert('Error', error);  
     }
   }, [error]);
 
