@@ -1,10 +1,10 @@
 import React from 'react';
-import { FlatList, View, StyleSheet, Button, Alert } from 'react-native';
+import { Text,FlatList, View, StyleSheet, Button, Alert } from 'react-native';
 import Contest from './Contest.jsx';
 import { useContest } from './ContestContext.js';
 
 const HomeScreen = ({ navigation }) => {
-  const { contests, deleteContest, error } = useContest();
+  const { contests, deleteContest, error, isOnline } = useContest();
 
   const confirmDelete = (id) => {
     Alert.alert(
@@ -26,6 +26,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={[styles.statusLabel, isOnline ? styles.online : styles.offline]}>
+        {isOnline ? 'Online' : 'Offline'}
+      </Text>
       <Button
         title="Create New Contest"
         onPress={() => navigation.navigate('CreateContest')}
@@ -55,6 +58,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  statusLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  online: {
+    color: 'green', 
+  },
+  offline: {
+    color: 'red', 
   },
 });
 

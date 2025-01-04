@@ -8,7 +8,7 @@ const CreateContest = ({ navigation }) => {
   const [category, setCategory] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
-  const [maxplayers, setMaxplayers] = useState('');
+  const [maxplayers, setMaxplayers] = useState(0);
 
   const handleCreate = () => {
     try {
